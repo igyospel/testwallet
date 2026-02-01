@@ -1,14 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  // Always use basePath for GitHub Pages, except in dev mode
-  basePath: process.env.NODE_ENV === 'development' ? '' : '/testwallet',
+  basePath: '/testwallet',
   images: {
     unoptimized: true,
   },
   trailingSlash: true,
   turbopack: {},
-  webpack: (config: any) => {
+  webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
@@ -19,4 +18,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
