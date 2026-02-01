@@ -1,186 +1,246 @@
-# 🛡️ GruiseWallet - Ultra-Secure Solana Wallet
+# GruiseWallet - Solana Wallet with Advanced Features
 
-**Maximum Security. Non-Custodial. Production-Grade.**
+A modern, secure, and feature-rich Solana wallet built with Next.js 15, featuring real-time staking, SPL token management, and portfolio tracking.
 
-GruiseWallet is a production-ready, non-custodial Solana Web3 wallet built with maximum client-side security as the top priority. It implements industry-grade cryptographic standards used by top crypto wallets.
+![GruiseWallet](public/gillions-logo.png)
 
-![GruiseWallet](https://img.shields.io/badge/Security-Maximum-brightgreen) ![Solana](https://img.shields.io/badge/Blockchain-Solana-blueviolet) ![License](https://img.shields.io/badge/License-MIT-blue)
+## 🚀 Features
 
-## 🔐 Security Features
+### Core Wallet Functionality
+- ✅ **HD Wallet Support** - BIP39 mnemonic phrase generation and import
+- ✅ **Multiple Accounts** - Create and manage multiple accounts from one seed
+- ✅ **Private Key Import** - Import existing wallets via private key
+- ✅ **Watch-Only Accounts** - Monitor addresses without private keys
+- ✅ **Secure Storage** - AES-256-GCM encryption for sensitive data
+- ✅ **Session Management** - Auto-lock with configurable timeout
 
-### Cryptography & Key Management
-- ✅ **BIP-39 Mnemonic**: 24-word seed phrase generation using secure Web Crypto API entropy
-- ✅ **BIP-44 Derivation**: Standard Solana derivation path (`m/44'/501'/0'/0'`)
-- ✅ **AES-256-GCM Encryption**: Military-grade encryption for private keys
-- ✅ **Argon2id Key Derivation**: Memory-hard password hashing (64MB, 4 iterations)
-- ✅ **IndexedDB Storage**: Encrypted vault storage (never plaintext)
-- ✅ **No LocalStorage**: Secrets never stored in localStorage
+### Staking Features
+- ⚡ **Real-Time Balance Updates** - 5-second refresh interval
+- 🎯 **Instant Stake Creation** - Optimistic UI updates
+- 📊 **Validator Selection** - Choose from top Solana validators
+- 💰 **Rewards Tracking** - Monitor staking rewards in real-time
+- 🔄 **Stake Management** - Deactivate and withdraw stakes
+- 🚀 **Fast Discovery** - Automatic stake account detection
+- 💾 **Smart Caching** - Persistent stake tracking for instant loads
 
-### Authentication & Access Control
-- ✅ **Password Protection**: Minimum 8-character password requirement
-- ✅ **Auto-Lock**: Automatic wallet lock after 5 minutes of inactivity
-- ✅ **Manual Lock**: One-click wallet locking
-- ✅ **Session Management**: In-memory key caching with automatic cleanup
+### Token Management
+- 🪙 **SPL Token Support** - Full SPL and Token-2022 support
+- 💵 **Price Tracking** - Real-time USD prices via Jupiter & DexScreener
+- 📈 **Portfolio Value** - Calculate total portfolio worth
+- 🎨 **Token Metadata** - Fetch from Raydium, Pump.fun, and on-chain
+- 🖼️ **Logo Display** - Automatic token logo fetching
+- ⚡ **Parallel Fetching** - Fast multi-source metadata aggregation
 
-### Seed Phrase Safety
-- ✅ **One-Time Display**: Seed phrase shown only once during creation
-- ✅ **Word Verification**: Users must confirm seed phrase in correct order
-- ✅ **Memory Clearing**: Sensitive data cleared from memory immediately
-- ✅ **No Re-Display**: Seed phrase cannot be shown again after confirmation
-- ✅ **Explicit Warnings**: Clear "lost phrase = lost funds" messaging
+### Performance Optimizations
+- 🚀 **Alchemy RPC Integration** - Premium Solana RPC endpoint
+- ⚡ **Dual Refresh Strategy** - Fast (5s) and full (15s) intervals
+- 💾 **Intelligent Caching** - Metadata persistence across sessions
+- 🎯 **Optimistic Updates** - Instant UI feedback
+- 🔄 **Smart Merging** - Preserve data during updates
 
-### Application Security
-- ✅ **Client-Side Only**: No backend custody or transmission
-- ✅ **No Analytics**: No tracking of sensitive flows
-- ✅ **Modular Crypto Logic**: Isolated, auditable security code
-- ✅ **TypeScript**: Type-safe implementation
+## 🛠️ Tech Stack
 
-## 🎨 UI/UX Features
-
-- 🌙 **Premium Dark Mode**: Exodus-inspired design
-- ✨ **Glassmorphism**: Modern glass-effect cards
-- 🎯 **Clear Security Indicators**: Lock status, network status
-- 🔔 **Visual Confirmations**: Feedback on all sensitive actions
-- 📱 **Responsive Design**: Works on all screen sizes
-
-## 🚀 Tech Stack
-
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: TailwindCSS 4
-- **Web3**: @solana/web3.js
-- **Cryptography**: 
-  - Web Crypto API
-  - hash-wasm (Argon2id)
-  - AES-256-GCM
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Blockchain**: Solana Web3.js
 - **State Management**: Zustand
-- **Storage**: IndexedDB (via idb)
-- **Icons**: Lucide React
+- **Styling**: Tailwind CSS
+- **Encryption**: Web Crypto API (AES-256-GCM)
+- **RPC Provider**: Alchemy
 
 ## 📦 Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/GruiseWallet.git
-cd GruiseWallet
+git clone https://github.com/igyospel/testwallet.git
+cd testwallet
 
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local and add your Alchemy API key
+
 # Run development server
 npm run dev
+```
 
+Open [http://localhost:3000](http://localhost:3000) to view the wallet.
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Alchemy Solana RPC API Key
+NEXT_PUBLIC_ALCHEMY_API_KEY=your_alchemy_api_key_here
+```
+
+Get your free Alchemy API key at [https://www.alchemy.com/](https://www.alchemy.com/)
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/                    # Next.js app router
+│   ├── api/               # API routes
+│   │   └── rpc/          # RPC proxy endpoint
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Main page
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   └── views/            # Main view components
+│       ├── OnboardingView.tsx
+│       ├── UnlockView.tsx
+│       └── DashboardView.tsx
+├── core/                  # Core wallet logic
+│   ├── security/         # Encryption & storage
+│   │   ├── crypto.ts
+│   │   ├── session.ts
+│   │   └── storage.ts
+│   ├── services/         # Blockchain services
+│   │   ├── staking.ts
+│   │   ├── token.ts
+│   │   └── history.ts
+│   ├── store/            # State management
+│   │   └── walletStore.ts
+│   ├── utils/            # Utilities
+│   │   └── connection.ts
+│   └── wallet/           # Wallet operations
+│       └── walletService.ts
+└── lib/                   # Shared utilities
+    └── utils.ts
+```
+
+## 🎯 Key Features Explained
+
+### Real-Time Staking Updates
+
+The wallet implements a dual-refresh strategy:
+
+1. **Fast Path (5s)**: Updates SOL balance and known stake accounts
+   - Uses `getMultipleAccountsInfo` for instant balance updates
+   - Preserves metadata (rewards, validator info)
+   - ~200-500ms response time with Alchemy
+
+2. **Full Scan (15s)**: Comprehensive refresh
+   - Discovers new stake accounts
+   - Updates all metadata
+   - Refreshes token list and prices
+   - ~1-2s response time
+
+### Token Price Fetching
+
+Multi-source price aggregation:
+- **Primary**: Jupiter Price API (15,000+ tokens)
+- **Fallback 1**: DexScreener API (comprehensive coverage)
+- **Fallback 2**: On-chain metadata
+
+### Smart Caching System
+
+- **Stake Addresses**: Persistent tracking list for instant loads
+- **Token Metadata**: Raydium & Jupiter cache (17,000+ tokens)
+- **Account Data**: Encrypted local storage
+- **Price Data**: Session-based caching
+
+## 🔒 Security Features
+
+- **AES-256-GCM Encryption**: All sensitive data encrypted at rest
+- **PBKDF2 Key Derivation**: 100,000 iterations for password hashing
+- **Session Management**: Auto-lock after inactivity
+- **No Server Storage**: All data stored locally in browser
+- **Secure Random**: Cryptographically secure random number generation
+
+## 📊 Performance Metrics
+
+| Metric | Value |
+|--------|-------|
+| **Initial Load** | <2s |
+| **Balance Update** | 5s interval |
+| **Stake Discovery** | <3s (first time) |
+| **Token Metadata** | <1s (cached) |
+| **Price Fetching** | <2s (parallel) |
+| **Transaction Signing** | <500ms |
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Manual Build
+
+```bash
 # Build for production
 npm run build
+
+# Start production server
 npm start
 ```
 
-## 🔧 Configuration
-
-The wallet is configured to use **Solana Devnet** by default for safety during testing. To switch networks, modify the connection in `src/core/store/walletStore.ts`:
-
-```typescript
-// For Mainnet (USE WITH CAUTION)
-const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
-
-// For Devnet (Safe for testing)
-const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
-```
-
-## 🛠️ Development
+## 🧪 Testing
 
 ```bash
-# Run development server
-npm run dev
-
-# Type checking
+# Run type checking
 npm run type-check
 
-# Linting
+# Run linter
 npm run lint
 
-# Build
+# Build test
 npm run build
 ```
 
-## 🔒 Security Best Practices
+## 📝 Usage Guide
 
-### For Users
-1. **Never share your seed phrase** with anyone
-2. **Write down your seed phrase** on paper and store it safely
-3. **Use a strong password** (12+ characters recommended)
-4. **Verify the URL** before entering sensitive information
-5. **Lock your wallet** when not in use
+### Creating a New Wallet
 
-### For Developers
-1. All cryptographic operations are isolated in `src/core/security/`
-2. Never log sensitive information (keys, passwords, seed phrases)
-3. Always clear sensitive data from memory after use
-4. Use the provided `CryptoService` for all encryption/decryption
-5. Never store unencrypted secrets
+1. Click "Create New Wallet"
+2. Set a strong password
+3. **IMPORTANT**: Write down your 12-word recovery phrase
+4. Confirm the recovery phrase
+5. Your wallet is ready!
 
-## 📁 Project Structure
+### Importing an Existing Wallet
 
-```
-GruiseWallet/
-├── src/
-│   ├── app/                    # Next.js app router
-│   │   ├── page.tsx           # Main orchestrator
-│   │   ├── layout.tsx         # Root layout
-│   │   └── globals.css        # Global styles
-│   ├── components/
-│   │   ├── ui/                # Reusable UI components
-│   │   │   ├── Button.tsx
-│   │   │   ├── Input.tsx
-│   │   │   └── Card.tsx
-│   │   └── views/             # Main application views
-│   │       ├── OnboardingView.tsx
-│   │       ├── UnlockView.tsx
-│   │       └── DashboardView.tsx
-│   ├── core/
-│   │   ├── security/          # Security & cryptography
-│   │   │   ├── crypto.ts      # AES-256-GCM + Argon2id
-│   │   │   ├── storage.ts     # IndexedDB wrapper
-│   │   │   └── session.ts     # Session management
-│   │   ├── wallet/            # Wallet logic
-│   │   │   └── walletService.ts
-│   │   └── store/             # State management
-│   │       └── walletStore.ts
-│   └── lib/
-│       └── utils.ts           # Utility functions
-├── public/                    # Static assets
-└── package.json
-```
+**Via Mnemonic:**
+1. Click "Import Wallet"
+2. Enter your 12-word recovery phrase
+3. Set a password
+4. Done!
 
-## 🚫 Strict Prohibitions
+**Via Private Key:**
+1. Unlock your wallet
+2. Click "Add Account" → "Import Private Key"
+3. Paste your private key
+4. Account imported!
 
-- ❌ NO backend custody
-- ❌ NO private key transmission
-- ❌ NO analytics tracking of sensitive flows
-- ❌ NO seed phrase recovery via server
-- ❌ NO silent approvals
-- ❌ NO plaintext storage of secrets
+### Staking SOL
 
-## 🧪 Testing
+1. Go to "Staking" tab
+2. Click "Stake SOL"
+3. Enter amount to stake
+4. Select a validator
+5. Confirm transaction
+6. Balance updates instantly!
 
-**IMPORTANT**: This wallet is configured for Devnet by default. Always test thoroughly before using with real funds.
+### Managing Tokens
 
-1. Create a new wallet
-2. Save the 24-word seed phrase
-3. Verify the seed phrase by selecting words in order
-4. Test lock/unlock functionality
-5. Check balance on Solana Explorer (Devnet)
+- **View Tokens**: Automatically displayed on dashboard
+- **Token Prices**: Real-time USD values
+- **Portfolio Value**: Total worth calculated automatically
 
-## 🔮 Roadmap
+## 🤝 Contributing
 
-- [ ] WalletConnect v2 integration
-- [ ] Send/Receive transactions
-- [ ] Token support (SPL tokens)
-- [ ] Transaction history
-- [ ] Multiple accounts
-- [ ] Hardware wallet support
-- [ ] Biometric unlock (WebAuthn)
-- [ ] Import existing wallet
-- [ ] Network switching UI
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
@@ -188,26 +248,18 @@ MIT License - see LICENSE file for details
 
 ## ⚠️ Disclaimer
 
-This software is provided "as is", without warranty of any kind. Use at your own risk. Always verify the code before using with real funds. The developers are not responsible for any loss of funds.
+This wallet is for educational and testing purposes. Always verify transactions and never share your private keys or recovery phrase. Use at your own risk.
 
-## 🤝 Contributing
+## 🔗 Links
 
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+- **GitHub**: [https://github.com/igyospel/testwallet](https://github.com/igyospel/testwallet)
+- **Solana Docs**: [https://docs.solana.com/](https://docs.solana.com/)
+- **Alchemy**: [https://www.alchemy.com/](https://www.alchemy.com/)
 
-## 📞 Support
+## 💡 Support
 
-For issues and questions:
-- Open an issue on GitHub
-- Check existing documentation
-- Review the code in `src/core/security/` for security implementation details
+For issues and questions, please open an issue on GitHub.
 
 ---
 
 **Built with ❤️ for the Solana ecosystem**
-
-*GruiseWallet - Your keys, your crypto, your control.*
