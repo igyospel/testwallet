@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: process.env.NODE_ENV === 'production' ? '/testwallet' : '',
+  // Always use basePath for GitHub Pages, except in dev mode
+  basePath: process.env.NODE_ENV === 'development' ? '' : '/testwallet',
   images: {
     unoptimized: true,
   },
