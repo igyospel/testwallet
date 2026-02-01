@@ -118,21 +118,36 @@ export function DashboardView() {
         refreshAll();
     }, [refreshAll, activeAccountIndex]);
 
-    // Fast interval: Refresh SOL Balance every 5s (Sat Set)
+    // Optimized Polling: Only refresh when visible and with longer intervals
     useEffect(() => {
-        const interval = setInterval(() => {
-            refreshBalance();
-        }, 5000); // 5 seconds
-        return () => clearInterval(interval);
-    }, [refreshBalance]);
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                refreshBalance();
+            }
+        };
 
-    // Slow interval: Full Refresh (Tokens + Staking) every 15s
-    useEffect(() => {
-        const interval = setInterval(() => {
-            refreshAll();
-        }, 15000); // 15 seconds
-        return () => clearInterval(interval);
-    }, [refreshAll]);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Fast interval: Balance only (30s instead of 5s)
+        const balanceInterval = setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                refreshBalance();
+            }
+        }, 30000);
+
+        // Slow interval: Full Refresh (60s instead of 15s)
+        const fullInterval = setInterval(() => {
+            if (document.visibilityState === 'visible') {
+                refreshAll();
+            }
+        }, 60000);
+
+        return () => {
+            clearInterval(balanceInterval);
+            clearInterval(fullInterval);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [refreshBalance, refreshAll]);
 
     useEffect(() => {
         if (activeTab === 'history') {

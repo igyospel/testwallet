@@ -3,12 +3,23 @@ type LockCallback = () => void;
 let sessionKey: CryptoKey | null = null;
 let inactivityTimer: number | null = null;
 let onLock: LockCallback | null = null;
-const AUTO_LOCK_MS = 5 * 60 * 1000; // 5 minutes
+const AUTO_LOCK_MS = 30 * 60 * 1000; // 30 minutes
+let isListening = false;
 
 export const SessionManager = {
     setKey: (key: CryptoKey) => {
         sessionKey = key;
         SessionManager.resetTimer();
+
+        if (!isListening && typeof window !== 'undefined') {
+            // Reset timer on interaction
+            window.addEventListener('click', () => SessionManager.resetTimer());
+            window.addEventListener('keydown', () => SessionManager.resetTimer());
+            window.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') SessionManager.resetTimer();
+            });
+            isListening = true;
+        }
     },
 
     getKey: (): CryptoKey | null => {
@@ -36,9 +47,12 @@ export const SessionManager = {
 
     resetTimer: () => {
         if (inactivityTimer) window.clearTimeout(inactivityTimer);
-        inactivityTimer = window.setTimeout(() => {
-            SessionManager.clear();
-        }, AUTO_LOCK_MS) as unknown as number;
+        // Only verify lock if we actually have a key
+        if (sessionKey) {
+            inactivityTimer = window.setTimeout(() => {
+                SessionManager.clear();
+            }, AUTO_LOCK_MS) as unknown as number;
+        }
     },
 
     setOnLock: (cb: LockCallback) => {
