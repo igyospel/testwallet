@@ -5,12 +5,13 @@ import { Connection, ConnectionConfig } from '@solana/web3.js';
  */
 export function getProxyUrl(): string {
     // For static export (GitHub Pages), use Alchemy directly
+    // For Vercel, use the API proxy route
     if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_USE_DIRECT_RPC === 'true') {
         const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || 'DHBbNy1FFcLG-35kDj1y-';
         return `https://solana-mainnet.g.alchemy.com/v2/${apiKey}`;
     }
 
-    // In browser with proxy, use current origin
+    // In browser, use proxy (works on Vercel and local dev)
     if (typeof window !== 'undefined') {
         return `${window.location.origin}/api/rpc`;
     }
