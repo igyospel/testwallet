@@ -39,7 +39,7 @@ jobs:
       - name: Build with Next.js
         run: npm run build
         env:
-          NEXT_PUBLIC_ALCHEMY_API_KEY: ${{ secrets.NEXT_PUBLIC_ALCHEMY_API_KEY }}
+          NEXT_PUBLIC_ALCHEMY_API_KEY: ${{ secrets.NEXT_PUBLIC_ALCHEMY_API_KEY || 'DHBbNy1FFcLG-35kDj1y-' }}
           NEXT_PUBLIC_USE_DIRECT_RPC: 'true'
 
       - name: Upload artifact
